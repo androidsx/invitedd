@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Invitedd</string>
+    <string name="action_info">Info</string>
+    <string name="support_email">jesus+invitedd@mediosyproyectos.com</string>
+
+    <string name="error_msg">There has been an error, please try again later</string>
+</resources>
