@@ -1,4 +1,4 @@
-package invitedd.androidsx.com.invitedd;
+package com.androidsx.invitedd;
 
 import android.content.Intent;
 import android.net.Uri;
