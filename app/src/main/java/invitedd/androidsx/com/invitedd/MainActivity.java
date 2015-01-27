@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,10 +25,23 @@ public class MainActivity extends ActionBarActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final String INVITEDD_URL = "http://www.invitedd.com/en?app=1";
-
     private WebView webView;
     private ProgressBar progressBar;
+
+    class InviteddUrlBuilder {
+        private static final String INVITEDD_URL = "http://www.invitedd.com/";
+
+        private Locale locale;
+
+        InviteddUrlBuilder locale(Locale locale) {
+            this.locale = locale;
+            return this;
+        }
+        String build() {
+            String language = ("es".equals(locale.getLanguage())) ? "es" : "en";
+            return INVITEDD_URL + language + "?cont=androidapp";
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +85,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     void configureWebview() {
+        final String url = new InviteddUrlBuilder().locale(Locale.getDefault()).build();
+
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         webView = (WebView) findViewById(R.id.webview);
@@ -99,7 +115,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 // remove icon & language
-                if (url.equals(INVITEDD_URL)) {
+                if (url.startsWith(url)) {
                     webView.loadUrl("javascript:$('nav').first().remove()");
 
                     // timer as it takes some time to render the changes
@@ -125,7 +141,7 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
-        webView.loadUrl(INVITEDD_URL);
+        webView.loadUrl(url);
         webView.setVisibility(View.INVISIBLE);
     }
 
